@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Lingva.WebAPI.Controllers
 {
-    [Authorize(Policy = "ApiReader")]
+    //[Authorize(Policy = "ApiReader")]
     [Route("api/group")]
     [ApiController]
     public class GroupController : ControllerBase
