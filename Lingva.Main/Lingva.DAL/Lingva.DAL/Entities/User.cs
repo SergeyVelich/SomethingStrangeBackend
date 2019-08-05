@@ -9,6 +9,11 @@ namespace Lingva.DAL.Entities
         public string Name { get; set; }
         public string Email { get; set; }
 
-        public virtual ICollection<GroupUser> GroupUsers { get; set; }
+       public virtual ICollection<Post> Posts { get; set; }
+
+        public User()
+        {
+            Posts = new List<Post>();
+        }
     }
 }

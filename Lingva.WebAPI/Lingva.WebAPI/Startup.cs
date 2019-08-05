@@ -44,7 +44,7 @@ namespace Lingva.WebAPI
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseMiddleware<ExceptionHandlerMiddleware>();
+            //app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             if (env.IsDevelopment())
             {

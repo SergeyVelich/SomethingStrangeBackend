@@ -12,7 +12,7 @@ namespace Lingva.DAL.Dapper.Repositories
 
         }
 
-        public Task<IEnumerable<User>> GetListByGroupAsync(int id)
+        public Task<IEnumerable<User>> GetListByPostAsync(int id)
         {
             throw new System.NotImplementedException();
         }

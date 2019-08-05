@@ -2,9 +2,9 @@
 
 namespace Lingva.DAL.Dapper.Repositories
 {
-    public class GroupRepository : Repository, IGroupRepository
+    public class PostRepository : Repository, IPostRepository
     {
-        public GroupRepository(DapperContext dbContext) : base(dbContext)
+        public PostRepository(DapperContext dbContext) : base(dbContext)
         {
 
         }

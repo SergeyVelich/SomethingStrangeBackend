@@ -18,7 +18,7 @@ namespace Lingva.DAL.CosmosSqlApi
         private Dictionary<Type, object> sets;
         protected bool disposed = false;
 
-        public CosmosSqlApiSet<Group> Groups { get => Set<Group>(); }
+        public CosmosSqlApiSet<Post> Posts { get => Set<Post>(); }
         public CosmosSqlApiSet<Language> Languages { get => Set<Language>(); }
         public CosmosSqlApiSet<Entities.User> Users { get => Set<Entities.User>(); }
 
@@ -100,7 +100,7 @@ namespace Lingva.DAL.CosmosSqlApi
             await Client.CreateDocumentAsync(uri, new { Id = 1, Name = "en", CreateDate = DateTime.Now, ModifyDate = DateTime.Now });
             await Client.CreateDocumentAsync(uri, new { Id = 2, Name = "ru", CreateDate = DateTime.Now, ModifyDate = DateTime.Now });
 
-            uri = UriFactory.CreateDocumentCollectionUri("lingva", "Groups");
+            uri = UriFactory.CreateDocumentCollectionUri("lingva", "Posts");
             await Client.CreateDocumentAsync(uri, new { Id = 1, Name = "Harry Potter", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 1, Description = "Good movie"});
             await Client.CreateDocumentAsync(uri, new { Id = 2, Name = "Librium", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 1, Description = "Eq"});
             await Client.CreateDocumentAsync(uri, new { Id = 3, Name = "2Guns", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, LanguageId = 2, Description = "stuff"});

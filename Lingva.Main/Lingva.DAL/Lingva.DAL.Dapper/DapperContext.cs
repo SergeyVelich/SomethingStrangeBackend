@@ -15,7 +15,7 @@ namespace Lingva.DAL.Dapper
 
         public IDbConnection Connection { get; }
 
-        public DapperSet<Group> Groups { get => Set<Group>(); }
+        public DapperSet<Post> Groups { get => Set<Post>(); }
         public DapperSet<Language> Languages { get => Set<Language>(); }
         public DapperSet<User> Users { get => Set<User>(); }
 

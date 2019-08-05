@@ -19,7 +19,7 @@ namespace Lingva.WebAPI.Infrastructure.Adapters
 
         }
 
-        public virtual IQueryOptions Map(GroupsListOptionsModel optionsModel)
+        public virtual IQueryOptions Map(PostsListOptionsModel optionsModel)
         {
             List<QueryFilter> filters = new List<QueryFilter>();
             if (optionsModel.Name != null)
@@ -45,6 +45,7 @@ namespace Lingva.WebAPI.Infrastructure.Adapters
 
             List<QueryIncluder> includers = new List<QueryIncluder>();
             includers.Add(new QueryIncluder("Language"));
+            includers.Add(new QueryIncluder("Author"));
 
             int take = optionsModel.PageSize;
             int skip = optionsModel.PageSize * (Math.Max(optionsModel.PageIndex, 1) - 1);

@@ -4,14 +4,10 @@ using System.Diagnostics.CodeAnalysis;
 namespace Lingva.DAL.Entities
 {
     [ExcludeFromCodeCoverage]
-    public class Language : BaseBE
+    public class Tag : BaseBE
     {
         public string Name { get; set; }
-        public virtual ICollection<Post> Posts { get; set; }
 
-        public Language()
-        {
-            Posts = new List<Post>();
-        }
+        public virtual ICollection<PostTag> PostTags { get; set; }
     }
 }

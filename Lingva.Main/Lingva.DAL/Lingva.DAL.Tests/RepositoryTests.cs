@@ -15,8 +15,8 @@ namespace Lingva.DAL.EF.Tests
     [ExcludeFromCodeCoverage]
     public class RepositoryTests
     {
-        private IGroupRepository _groupRepository;
-        private List<Group> _groupList;
+        private IPostRepository _postRepository;
+        private List<Post> _postList;
 
         [SetUp]
         public void Setup()
@@ -26,7 +26,7 @@ namespace Lingva.DAL.EF.Tests
             var _dbContext = new DictionaryContext(optionsBuilder.Options);
             _dbContext.Database.EnsureDeleted();
             _dbContext.Database.EnsureCreated();
-            _groupList = new List<Group>()
+            _postList = new List<Post>()
             {
                 new Group
                 {
@@ -43,16 +43,16 @@ namespace Lingva.DAL.EF.Tests
                     LanguageId = 1,
                 }
             };
-            _dbContext.Set<Group>().AddRange(_groupList);
+            _dbContext.Set<Post>().AddRange(_postList);
             _dbContext.SaveChanges();
 
-            _groupRepository = new GroupRepository(_dbContext);
+            _postRepository = new PostRepository(_dbContext);
         }
 
         [Test]
         public async Task GetListAsync_ShouldNot_ReturnNull()
         {
-            var orders = await _groupRepository.GetListAsync<Group>();
+            var orders = await _postRepository.GetListAsync<Post>();
 
             Assert.NotNull(orders);
         }
@@ -60,9 +60,9 @@ namespace Lingva.DAL.EF.Tests
         [Test]
         public async Task GetByIdAsync_ValidId_ReturnGroup()
         {
-            var groups = await _groupRepository.GetListAsync<Group>();
-            int validId = groups.First().Id;
-            var result = await _groupRepository.GetByIdAsync<Group>(validId);
+            var posts = await _postRepository.GetListAsync<Post>();
+            int validId = posts.First().Id;
+            var result = await _postRepository.GetByIdAsync<Post>(validId);
 
             Assert.NotNull(result);
         }
@@ -71,7 +71,7 @@ namespace Lingva.DAL.EF.Tests
         public async Task GetByIdAsync_InvalidId_ReturnNull()
         {
             int invalidId = -1;
-            var result = await _groupRepository.GetByIdAsync<Group>(invalidId);
+            var result = await _postRepository.GetByIdAsync<Post>(invalidId);
 
             Assert.Null(result);
         }
@@ -79,7 +79,7 @@ namespace Lingva.DAL.EF.Tests
         [Test]
         public async Task AddAsync_Group_ReturnGroup()
         {
-            var result = await _groupRepository.CreateAsync(_groupList[0]);
+            var result = await _postRepository.CreateAsync(_postList[0]);
 
             Assert.True(result.Id != 0);
         }
@@ -87,10 +87,10 @@ namespace Lingva.DAL.EF.Tests
         [Test]
         public async Task UpdateAsync_Group_ReturnGroup()
         {
-            var groupFromDb = await _groupRepository.GetByIdAsync<Group>(1);
+            var groupFromDb = await _postRepository.GetByIdAsync<Post>(1);
             int languageId = groupFromDb.LanguageId;
             groupFromDb.LanguageId ++;
-            var result = await _groupRepository.UpdateAsync(groupFromDb);
+            var result = await _postRepository.UpdateAsync(groupFromDb);
 
             Assert.True(result.LanguageId != languageId);
         }
@@ -98,9 +98,9 @@ namespace Lingva.DAL.EF.Tests
         [Test]
         public async Task DeleteAsync_Group_ReturnGroup()
         {
-            var groupFromDb = await _groupRepository.GetByIdAsync<Group>(2);
-            await _groupRepository.DeleteAsync<Group>(groupFromDb.Id);
-            var result = await _groupRepository.GetByIdAsync<Group>(groupFromDb.Id);
+            var groupFromDb = await _postRepository.GetByIdAsync<Post>(2);
+            await _postRepository.DeleteAsync<Post>(groupFromDb.Id);
+            var result = await _postRepository.GetByIdAsync<Post>(groupFromDb.Id);
 
             Assert.Null(result);
         }
@@ -109,10 +109,10 @@ namespace Lingva.DAL.EF.Tests
         //public async Task GetListAsync_ShouldNot_Return_NotNull()
         //{
         //    //arrange
-        //    IGroupRepository _repository = new Repository(_context);
+        //    IPostRepository _repository = new Repository(_context);
 
         //    //act
-        //    var result = await _repository.GetListAsync<Group>();
+        //    var result = await _repository.GetListAsync<Post>();
 
         //    //assert
         //    Assert.NotNull(result);
@@ -122,35 +122,35 @@ namespace Lingva.DAL.EF.Tests
         //public async Task GetListAsync_Should_Return_SetValue()
         //{
         //    //arrange
-        //    IGroupRepository _repository = new Repository(_context);
+        //    IPostRepository _repository = new Repository(_context);
 
         //    //act
-        //    var result = await _repository.GetListAsync<Group>();
+        //    var result = await _repository.GetListAsync<Post>();
 
         //    //assert
-        //    Assert.True(result.Count() == _groupList.Count());
+        //    Assert.True(result.Count() == _postList.Count());
         //}
 
         //[Fact]
         //public async Task GetListAsyncWithOptions_ShouldNot_Return_NotNull()
         //{
         //    //arrange
-        //    IGroupRepository _repository = new Repository(_context);
+        //    IPostRepository _repository = new Repository(_context);
 
 
-        //    //_repoMock.Setup(r => r.GetListAsync<Group>()).Returns(Task.FromResult<IEnumerable<Group>>(_groupList));
-        //    //_groupManager = new GroupService(_repoMock.Object, _data.Object);
-        //    //_data.Setup(d => d.Map<IEnumerable<GroupDto>>(_groupList)).Returns(_groupListDto);
+        //    //_repoMock.Setup(r => r.GetListAsync<Post>()).Returns(Task.FromResult<IEnumerable<Post>>(_postList));
+        //    //_postManager = new GroupService(_repoMock.Object, _data.Object);
+        //    //_data.Setup(d => d.Map<IEnumerable<PostDto>>(_postList)).Returns(_postListDto);
 
         //    var queryOptions = Substitute.For<IQueryOptions>();
-        //    //queryOptions.GetFiltersExpression<Group>().Returns();
-        //    //queryOptions.GetFiltersExpression<Group>().Returns<Group>(null);
-        //    //queryOptions.GetSortersCollection<Group>().Returns<Group>(null);
-        //    //queryOptions.GetIncludersCollection<Group>().Returns<Group>(null);
-        //    //queryOptions.Pagenator.Returns<Group>(null);
+        //    //queryOptions.GetFiltersExpression<Post>().Returns();
+        //    //queryOptions.GetFiltersExpression<Post>().Returns<Post>(null);
+        //    //queryOptions.GetSortersCollection<Post>().Returns<Post>(null);
+        //    //queryOptions.GetIncludersCollection<Post>().Returns<Post>(null);
+        //    //queryOptions.Pagenator.Returns<Post>(null);
 
         //    //act
-        //    var result = await _repository.GetListAsync<Group>(queryOptions);
+        //    var result = await _repository.GetListAsync<Post>(queryOptions);
 
         //    //assert
         //    Assert.NotNull(result);
@@ -160,10 +160,10 @@ namespace Lingva.DAL.EF.Tests
         //public async Task GetBy_Id_Should_Return_Correct_Object()
         //{
         //    //arrange
-        //    IGroupRepository _repository = new Repository(_context);
+        //    IPostRepository _repository = new Repository(_context);
 
-        //    var products = await _repository.GetListAsync<Group>();
-        //    var testProduct = await _repository.GetByIdAsync<Group>(products.First().Id);
+        //    var products = await _repository.GetListAsync<Post>();
+        //    var testProduct = await _repository.GetByIdAsync<Post>(products.First().Id);
 
         //    Assert.NotNull(testProduct);
         //}
@@ -172,10 +172,10 @@ namespace Lingva.DAL.EF.Tests
         //public async Task GetBy_WrongId_Should_ReturnNull()
         //{
         //    //arrange
-        //    IGroupRepository _repository = new Repository(_context);
+        //    IPostRepository _repository = new Repository(_context);
 
         //    int badId = -1;
-        //    var testProduct = await _repository.GetByIdAsync<Group>(badId);
+        //    var testProduct = await _repository.GetByIdAsync<Post>(badId);
 
         //    Assert.Null(testProduct);
         //}
@@ -184,7 +184,7 @@ namespace Lingva.DAL.EF.Tests
         //public async Task Add_Should_Return_Correct_Object()
         //{
         //    //arrange
-        //    IGroupRepository _repository = new Repository(_context);
+        //    IPostRepository _repository = new Repository(_context);
 
         //    var testPerson = await _repository.CreateAsync(_group);
         //    await _repository.DeleteAsync(testPerson);
@@ -196,11 +196,11 @@ namespace Lingva.DAL.EF.Tests
         ////public async Task Remove()
         ////{
         ////    //arrange
-        ////    IGroupRepository _repository = new Repository(_context);
+        ////    IPostRepository _repository = new Repository(_context);
 
         ////    var tempPerson = await _repository.CreateAsync(_group);
         ////    await _repository.DeleteAsync(tempPerson);
-        ////    var testPerson = await _repository.GetByIdAsync<Group>(tempPerson.Id);
+        ////    var testPerson = await _repository.GetByIdAsync<Post>(tempPerson.Id);
 
         ////    Assert.Null(testPerson);
         ////}
@@ -209,15 +209,15 @@ namespace Lingva.DAL.EF.Tests
         //public async Task AddAsync_WasExecute()
         //{
         //    //arrange
-        //    IGroupRepository _repository = new Repository(_context);
+        //    IPostRepository _repository = new Repository(_context);
         //    Group group = new Group { Id = 1 };
 
-        //    //_repoMock.Setup(r => r.CreateAsync<Group>(null));
-        //    //_data.Setup(d => d.Map<Group>(null)).Returns(group);
-        //    //_groupManager = new GroupService(_repoMock.Object, _data.Object);
+        //    //_repoMock.Setup(r => r.CreateAsync<Post>(null));
+        //    //_data.Setup(d => d.Map<Post>(null)).Returns(group);
+        //    //_postManager = new GroupService(_repoMock.Object, _data.Object);
 
         //    //act
-        //    await _repository.CreateAsync<Group>(null);
+        //    await _repository.CreateAsync<Post>(null);
 
         //    //assert
         //    //_context.Verify(mock => mock.CreateAsync(group), Times.Once());
@@ -228,12 +228,12 @@ namespace Lingva.DAL.EF.Tests
         //public async Task UpdateAsync_WasExecute()
         //{
         //    //arrange
-        //    IGroupRepository _repository = new Repository(_context);
+        //    IPostRepository _repository = new Repository(_context);
         //    Group group = new Group { Id = 1 };
 
-        //    //_repoMock.Setup(r => r.GetByIdAsync<Group>(group.Id)).Returns(Task.FromResult(group));
+        //    //_repoMock.Setup(r => r.GetByIdAsync<Post>(group.Id)).Returns(Task.FromResult(group));
         //    //_repoMock.Setup(r => r.UpdateAsync(group)).Returns(Task.FromResult(group));
-        //    //_groupManager = new GroupService(_repoMock.Object, _data.Object);
+        //    //_postManager = new GroupService(_repoMock.Object, _data.Object);
 
         //    //act
         //    await _repository.UpdateAsync(group);
@@ -246,12 +246,12 @@ namespace Lingva.DAL.EF.Tests
         //public async Task DeleteAsync_WasExecute()
         //{
         //    //arrange
-        //    IGroupRepository _repository = new Repository(_context);
+        //    IPostRepository _repository = new Repository(_context);
         //    Group group = new Group { Id = 1 };
 
-        //    //_repoMock.Setup(r => r.DeleteAsync<Group>(null));
-        //    //_data.Setup(d => d.Map<Group>(null)).Returns(group);
-        //    //_groupManager = new GroupService(_repoMock.Object, _data.Object);
+        //    //_repoMock.Setup(r => r.DeleteAsync<Post>(null));
+        //    //_data.Setup(d => d.Map<Post>(null)).Returns(group);
+        //    //_postManager = new GroupService(_repoMock.Object, _data.Object);
 
         //    //act
         //    await _repository.DeleteAsync(group);

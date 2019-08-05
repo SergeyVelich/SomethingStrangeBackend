@@ -29,7 +29,7 @@
 
   <ItemGroup>
     <Reference Include="Common">
-      <HintPath>..\..\..\..\Lingva\backend\Additional\Common\Common\bin\Release\netcoreapp2.2\Common.dll</HintPath>
+      <HintPath>..\..\Additional\Common\Common\bin\Debug\netcoreapp2.2\Common.dll</HintPath>
     </Reference>
     <Reference Include="DataAdapter">
       <HintPath>..\..\Additional\Mapping\DataAdapter\DataAdapter\bin\Debug\netcoreapp2.2\DataAdapter.dll</HintPath>
@@ -40,17 +40,11 @@
     <Reference Include="Lingva.DAL">
       <HintPath>..\..\Lingva.Main\Lingva.DAL\Lingva.DAL\bin\Debug\netcoreapp2.2\Lingva.DAL.dll</HintPath>
     </Reference>
-    <Reference Include="Lingva.DAL.CosmosSqlApi">
-      <HintPath>..\..\..\..\Lingva\backend\Lingva.Main\Lingva.DAL\Lingva.DAL.CosmosSqlApi\bin\Release\netcoreapp2.2\Lingva.DAL.CosmosSqlApi.dll</HintPath>
-    </Reference>
-    <Reference Include="Lingva.DAL.Dapper">
-      <HintPath>..\..\..\..\Lingva\backend\Lingva.Main\Lingva.DAL\Lingva.DAL.Dapper\bin\Release\netcoreapp2.2\Lingva.DAL.Dapper.dll</HintPath>
-    </Reference>
     <Reference Include="Lingva.DAL.EF">
-      <HintPath>..\..\..\..\Lingva\backend\Lingva.Main\Lingva.DAL\Lingva.DAL.EF\bin\Release\netcoreapp2.2\Lingva.DAL.EF.dll</HintPath>
+      <HintPath>..\..\Lingva.Main\Lingva.DAL\Lingva.DAL.EF\bin\Debug\netcoreapp2.2\Lingva.DAL.EF.dll</HintPath>
     </Reference>
     <Reference Include="Lingva.DAL.Mongo">
-      <HintPath>..\..\..\..\Lingva\backend\Lingva.Main\Lingva.DAL\Lingva.DAL.Mongo\bin\Release\netcoreapp2.2\Lingva.DAL.Mongo.dll</HintPath>
+      <HintPath>..\..\Lingva.Main\Lingva.DAL\Lingva.DAL.Mongo\bin\Debug\netcoreapp2.2\Lingva.DAL.Mongo.dll</HintPath>
     </Reference>
     <Reference Include="QueryBuilder">
       <HintPath>..\..\Additional\QueryBuilder\QueryBuilder\bin\Debug\netcoreapp2.2\QueryBuilder.dll</HintPath>

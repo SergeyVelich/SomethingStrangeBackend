@@ -2,9 +2,9 @@
 
 namespace Lingva.DAL.CosmosSqlApi.Repositories
 {
-    public class GroupRepository : Repository, IGroupRepository
+    public class PostRepository : Repository, IPostRepository
     {
-        public GroupRepository(CosmosSqlApiContext dbContext) : base(dbContext)
+        public PostRepository(CosmosSqlApiContext dbContext) : base(dbContext)
         {
 
         }

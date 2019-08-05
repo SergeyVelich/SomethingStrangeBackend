@@ -14,9 +14,9 @@ namespace Lingva.WebAPI.Infrastructure.Binders
                 throw new ArgumentNullException(nameof(context));
             }
 
-            if (context.Metadata.ModelType == typeof(GroupsListOptionsModel))
+            if (context.Metadata.ModelType == typeof(PostsListOptionsModel))
             {
-                return new BinderTypeModelBinder(typeof(GroupsListOptionsModelBinder));
+                return new BinderTypeModelBinder(typeof(PostsListOptionsModelBinder));
             }
 
             if (context.Metadata.ModelType == typeof(DateTime) || context.Metadata.ModelType == typeof(DateTime?))

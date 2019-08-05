@@ -9,7 +9,7 @@ namespace Lingva.DAL.EF.EntityConfigurations
         public void Configure(EntityTypeBuilder<Language> builder)
         {
             builder
-                .HasMany(x => x.Groups)
+                .HasMany(x => x.Posts)
                 .WithOne(x => x.Language)
                 .HasForeignKey(g => g.LanguageId);
         }

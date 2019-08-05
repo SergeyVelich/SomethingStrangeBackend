@@ -8,10 +8,7 @@ namespace Lingva.DAL.EF.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            //builder
-            //    .HasMany(x => x.GroupUsers)
-            //    .WithOne(x => x.User)
-            //    .HasForeignKey(gu => gu.UserId);
+
         }
     }
 }

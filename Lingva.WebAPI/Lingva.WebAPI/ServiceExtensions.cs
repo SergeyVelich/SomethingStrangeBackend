@@ -2,8 +2,6 @@
 using Lingva.BC;
 using Lingva.BC.Contracts;
 using Lingva.BC.Services;
-using Lingva.DAL.CosmosSqlApi;
-using Lingva.DAL.Dapper;
 using Lingva.DAL.EF.Context;
 using Lingva.DAL.EF.Repositories;
 using Lingva.DAL.Mongo;
@@ -35,22 +33,22 @@ namespace Lingva.WebAPI.Extensions
             //    return;
             //}
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(o =>
-            {
-                o.Authority = "http://localhost:6050"; // Auth Server
-                o.Audience = "resourceapi"; // API Resource Id
-                o.RequireHttpsMetadata = false;
-            });
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(o =>
+            //{
+            //    o.Authority = "http://localhost:6050"; // Auth Server
+            //    o.Audience = "resourceapi"; // API Resource Id
+            //    o.RequireHttpsMetadata = false;
+            //});
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("ApiReader", policy => policy.RequireClaim("scope", "resourceapi"));
-                options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
-            });
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("ApiReader", policy => policy.RequireClaim("scope", "resourceapi"));
+            //    options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
+            //});
         }
 
         public static void ConfigureAutoMapper(this IServiceCollection services)
@@ -112,14 +110,8 @@ namespace Lingva.WebAPI.Extensions
 
             switch (dbProvider)
             {
-                case DbProviders.Dapper:
-                    services.ConfigureDapper();
-                    break;
                 case DbProviders.Mongo:
                     services.ConfigureMongo();
-                    break;
-                case DbProviders.CosmosSqlApi:
-                    services.ConfigureAzureCosmosDB();
                     break;
                 default:
                     services.ConfigureEF(config);
@@ -133,22 +125,10 @@ namespace Lingva.WebAPI.Extensions
             services.ConfigureEFRepositories();
         }
 
-        public static void ConfigureDapper(this IServiceCollection services)
-        {
-            services.AddScoped<DapperContext>();
-            services.ConfigureDapperRepositories();
-        }
-
         public static void ConfigureMongo(this IServiceCollection services)
         {
             services.AddTransient<MongoContext>();
             services.ConfigureMongoRepositories();
-        }
-
-        public static void ConfigureAzureCosmosDB(this IServiceCollection services)
-        {
-            services.AddTransient<CosmosSqlApiContext>();
-            services.ConfigureAzureCosmosDBRepositories();
         }
 
         public static void ConfigureEFContext(this IServiceCollection services, IConfiguration config)
@@ -157,39 +137,27 @@ namespace Lingva.WebAPI.Extensions
 
             services.AddDbContext<DictionaryContext>(options =>
             {
-                options.UseSqlServer(connectionStringValue);
                 options.UseLazyLoadingProxies();
+                options.UseSqlServer(connectionStringValue);        
             });
         }
 
         public static void ConfigureEFRepositories(this IServiceCollection services)
         {
             services.AddScoped<IRepository, Repository>();
-            services.AddScoped<IGroupRepository, GroupRepository>();
-        }
-
-        public static void ConfigureDapperRepositories(this IServiceCollection services)
-        {
-            services.AddScoped<IRepository, DAL.Dapper.Repositories.Repository>();
-            services.AddScoped<IGroupRepository, DAL.Dapper.Repositories.GroupRepository>();
+            services.AddScoped<IPostRepository, PostRepository>();
         }
 
         public static void ConfigureMongoRepositories(this IServiceCollection services)
         {
             services.AddScoped<IRepository, DAL.Mongo.Repositories.Repository>();
-            services.AddScoped<IGroupRepository, DAL.Mongo.Repositories.GroupRepository>();
-        }
-
-        public static void ConfigureAzureCosmosDBRepositories(this IServiceCollection services)
-        {
-            services.AddScoped<IRepository, DAL.CosmosSqlApi.Repositories.Repository>();
-            services.AddScoped<IGroupRepository, DAL.CosmosSqlApi.Repositories.GroupRepository>();
+            services.AddScoped<IPostRepository, DAL.Mongo.Repositories.PostRepository>();
         }
 
         public static void ConfigureManagers(this IServiceCollection services)
         {
-            services.AddScoped<IGroupManager, GroupManager>();
-            services.AddScoped<IInfoManager, InfoManager>();
+            services.AddScoped<IPostManager, PostManager>();
+            services.AddScoped<IAddInfoManager, AddInfoManager>();
             services.AddScoped<IFileStorageManager, FileStorageManager>();
         }
 

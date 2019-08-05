@@ -14,7 +14,7 @@ namespace Lingva.DAL.Mongo
 
         public IClientSessionHandle Session { get => _session; }
 
-        public IMongoCollection<Group> Groups { get => Set<Group>(); }
+        public IMongoCollection<Post> Posts { get => Set<Post>(); }
         public IMongoCollection<Language> Languages { get => Set<Language>(); }
         public IMongoCollection<User> Users { get => Set<User>(); }
 
@@ -63,14 +63,14 @@ namespace Lingva.DAL.Mongo
                 await Set<Language>().InsertManyAsync(languages);
             }
 
-            if(await Set<Group>().Find(_ => true).CountDocumentsAsync() == 0)
+            if(await Set<Post>().Find(_ => true).CountDocumentsAsync() == 0)
             {
-                Group group1 = new Group { Id = 1, Name = "Harry Potter", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, Language = new Language() { Id = 1, Name = "en" }, Description = "Good movie" };
-                Group group2 = new Group { Id = 2, Name = "Librium", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, Language = new Language() { Id = 1, Name = "en" }, Description = "Eq" };
-                Group group3 = new Group { Id = 3, Name = "2Guns", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, Language = new Language() { Id = 2, Name = "ru" }, Description = "stuff" };
-                Group[] groups = { group1, group2, group3 };
+                Post post1 = new Post { Id = 1, Title = "Harry Potter", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, Language = new Language() { Id = 1, Name = "en" }, PreviewText = "Good movie", FullText = "Good movie" };
+                Post post2 = new Post { Id = 2, Title = "Librium", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, Language = new Language() { Id = 1, Name = "en" }, PreviewText = "Eq", FullText = "Good movie" };
+                Post post3 = new Post { Id = 3, Title = "2Guns", CreateDate = DateTime.Now, ModifyDate = DateTime.Now, Date = DateTime.Now, Language = new Language() { Id = 2, Name = "ru" }, PreviewText = "stuff", FullText = "Good movie" };
+                Post[] posts = { post1, post2, post3 };
 
-                await Set<Group>().InsertManyAsync(groups);
+                await Set<Post>().InsertManyAsync(posts);
             }
         }
     }
