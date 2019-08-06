@@ -40,8 +40,8 @@ namespace Lingva.WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] PostsListOptionsModel postsListOptionsModel)
         {
-            IEnumerable<PostDto> postsDto = await _postManager.GetListAsync(); //глючит в автомаппере
-            //IEnumerable<PostDto> postsDto = await _postManager.GetListAsync(_queryOptionsAdapter.Map(postsListOptionsModel));
+            //IEnumerable<PostDto> postsDto = await _postManager.GetListAsync(); //глючит в автомаппере
+            IEnumerable<PostDto> postsDto = await _postManager.GetListAsync(_queryOptionsAdapter.Map(postsListOptionsModel));
 
             return Ok(_dataAdapter.Map<IEnumerable<PostViewModel>>(postsDto));
         }
@@ -154,31 +154,6 @@ namespace Lingva.WebAPI.Controllers
             }
 
             return result;
-        }
-
-        private PostViewModel GetPostViewModelFromRequest()
-        {
-            PostViewModel postViewModel = null;
-            var stringItems = Request.Form["post"];
-            foreach (var stringItem in stringItems)
-            {
-                postViewModel = JsonConvert.DeserializeObject<PostViewModel>(stringItem);
-            }
-
-            return postViewModel;
-        }
-        private async Task<string> SaveFileFromRequestAsync(int id)
-        {
-            string path = null;
-            if (Request.Form.Files.Count > 0)
-            {
-                var file = Request.Form.Files[0];
-                string folderName = Path.Combine("Resources", "Images");
-                path = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), folderName), id.ToString());
-                await _fileStorageManager.SaveFileAsync(file, path, FileMode.Create);
-            }
-
-            return path;
         }
     }
 }
